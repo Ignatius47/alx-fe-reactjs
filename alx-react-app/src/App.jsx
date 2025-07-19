@@ -1,23 +1,9 @@
-import WelcomeMessage from './components/WelcomeMessage';
-import Header from './components/Header';
-import MainContent from './components/MainContent';
-import Footer from './components/Footer';
-import UserProfile from './components/UserProfile';
-
-function App() {
-  return (
-    <div>
-      <WelcomeMessage />
-      <Header />
-      <MainContent />
-      <Footer />
-      <UserProfile
-        name="Alice"
-        age="25"
-        bio="Loves hiking and photography"
-      />
-    </div>
-  );
+function Header() {
+    return (
+        <header style={{ backgroundColor: 'navy', color: 'white', textAlign: 'center', padding: '10px' }}>
+            <h1>My Favorite Cities</h1>
+        </header>
+    );
 }
 
-export default App;
+export default Header;
