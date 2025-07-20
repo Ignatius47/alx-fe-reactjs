@@ -1,5 +1,5 @@
 import Header from './components/Header';
-import MainContent from './MainContent';
+import MainContent from './components/MainContent';
 import Footer from './Footer';
 import UserProfile from './components/UserProfile';
 import Counter from './components/Counter';
