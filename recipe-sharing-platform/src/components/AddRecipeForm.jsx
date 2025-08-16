@@ -1,6 +1,32 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+function validate({ title, ingredients, instructions }) {
+  const errors = {};
+
+  if (!title.trim()) {
+    errors.title = "Title is required.";
+  }
+
+  if (!ingredients.trim()) {
+    errors.ingredients = "Ingredients are required.";
+  } else {
+    const list = ingredients
+      .split(",")
+      .map((i) => i.trim())
+      .filter(Boolean);
+    if (list.length < 2) {
+      errors.ingredients = "Please list at least 2 ingredients (comma separated).";
+    }
+  }
+
+  if (!instructions.trim()) {
+    errors.instructions = "Instructions are required.";
+  }
+
+  return errors;
+}
+
 function AddRecipeForm() {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
@@ -10,24 +36,21 @@ function AddRecipeForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // ✅ Validation
-    let formErrors = {};
-    if (!title.trim()) formErrors.title = "Title is required.";
-    if (!ingredients.trim()) {
-      formErrors.ingredients = "Ingredients are required.";
-    } else if (ingredients.split(",").length < 2) {
-      formErrors.ingredients = "Please list at least 2 ingredients (comma separated).";
-    }
-    if (!instructions.trim()) formErrors.instructions = "Instructions are required.";
-
+    const formErrors = validate({ title, ingredients, instructions });
     setErrors(formErrors);
 
     if (Object.keys(formErrors).length === 0) {
       const newRecipe = {
         id: Date.now(),
-        title,
-        ingredients: ingredients.split(",").map((item) => item.trim()),
-        instructions: instructions.split(".").map((step) => step.trim()).filter(Boolean),
+        title: title.trim(),
+        ingredients: ingredients
+          .split(",")
+          .map((i) => i.trim())
+          .filter(Boolean),
+        instructions: instructions
+          .split(".")
+          .map((s) => s.trim())
+          .filter(Boolean),
       };
 
       console.log("Recipe submitted:", newRecipe);
@@ -46,8 +69,9 @@ function AddRecipeForm() {
         <h1 className="text-3xl font-bold text-green-700 mb-6 text-center">
           Add New Recipe
         </h1>
+
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Title Field */}
+          {/* Title */}
           <div>
             <label className="block font-medium text-gray-700 mb-2">Recipe Title</label>
             <input
@@ -60,7 +84,7 @@ function AddRecipeForm() {
             {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
           </div>
 
-          {/* Ingredients Field */}
+          {/* Ingredients */}
           <div>
             <label className="block font-medium text-gray-700 mb-2">Ingredients</label>
             <textarea
@@ -75,7 +99,7 @@ function AddRecipeForm() {
             )}
           </div>
 
-          {/* Instructions Field */}
+          {/* Instructions */}
           <div>
             <label className="block font-medium text-gray-700 mb-2">Instructions</label>
             <textarea
@@ -90,7 +114,6 @@ function AddRecipeForm() {
             )}
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition"
