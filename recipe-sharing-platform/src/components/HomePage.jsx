@@ -1,46 +1,29 @@
-import { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
-function HomePage() {
-  const [recipes, setRecipes] = useState([]);
-
-  useEffect(() => {
-    fetch("/src/data.json")
-      .then((res) => res.json())
-      .then((data) => setRecipes(data))
-      .catch((err) => console.error("Error loading recipes:", err));
-  }, []);
-
+const HomePage = () => {
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <h1 className="text-4xl font-bold text-center mb-8 text-green-700">
-        Recipe Sharing Platform
-      </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {recipes.map((recipe) => (
-          <div
-            key={recipe.id}
-            className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-transform transform hover:scale-105 p-4"
-          >
-            <img
-              src={recipe.image}
-              alt={recipe.title}
-              className="rounded-lg w-full h-48 object-cover"
-            />
-            <h2 className="text-xl font-semibold mt-4">{recipe.title}</h2>
-            <p className="text-gray-600 mt-2">{recipe.summary}</p>
-
-            <Link
-              to={`/recipe/${recipe.id}`}
-              className="text-green-600 hover:text-green-800 mt-3 inline-block font-medium"
-            >
-              View Details →
-            </Link>
-          </div>
-        ))}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white">
+      <h1 className="text-5xl font-bold mb-6">Welcome to Music Player</h1>
+      <p className="text-lg mb-8 text-gray-400">
+        Search and play your favorite tracks instantly.
+      </p>
+      <div className="space-x-4">
+        <Link
+          to="/search"
+          className="px-6 py-3 bg-green-500 text-white rounded-xl shadow-md hover:bg-green-600 transition"
+        >
+          Search Music
+        </Link>
+        <Link
+          to="/library"
+          className="px-6 py-3 bg-gray-700 text-white rounded-xl shadow-md hover:bg-gray-800 transition"
+        >
+          Your Library
+        </Link>
       </div>
     </div>
   );
-}
+};
 
 export default HomePage;
