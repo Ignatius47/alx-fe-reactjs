@@ -1,9 +1,12 @@
 import { Navigate } from "react-router-dom";
-import { fakeAuth } from "../auth";
+import useAuth from "../hooks/useAuth";
 
 export default function ProtectedRoute({ children }) {
-  if (!fakeAuth.isAuthenticated) {
+  const { isAuthenticated } = useAuth(); // ✅ useAuth used
+
+  if (!isAuthenticated) {
     return <Navigate to="/login" />;
   }
+
   return children;
 }
