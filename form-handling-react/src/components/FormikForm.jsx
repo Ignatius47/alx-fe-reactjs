@@ -7,7 +7,9 @@ export default function FormikForm() {
   const validationSchema = Yup.object({
     username: Yup.string().required("Username is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
-    password: Yup.string().min(6, "Password must be at least 6 chars").required("Password is required"),
+    password: Yup.string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
   });
 
   const handleSubmit = (values, { setSubmitting, resetForm }) => {
@@ -28,7 +30,11 @@ export default function FormikForm() {
   };
 
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
       {({ isSubmitting }) => (
         <Form className="flex flex-col gap-2 w-64">
           <Field type="text" name="username" placeholder="Username" />
