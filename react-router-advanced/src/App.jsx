@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import About from "./components/About";
 import Profile from "./components/Profile";
-import BlogPost from "./components/BlogPost"; // Import the dynamic route component
+import BlogPost from "./components/BlogPost";
+import ProtectedRoute from "./components/ProtectedRoute"; 
 
 export default function App() {
   return (
@@ -11,8 +12,18 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/profile/*" element={<Profile />} />
 
+        {/* Protected route */}
+        <Route
+          path="/profile/*"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Dynamic route */}
         <Route path="/blog/:id" element={<BlogPost />} />
       </Routes>
     </BrowserRouter>
