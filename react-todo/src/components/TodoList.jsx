@@ -15,15 +15,11 @@ export default function TodoList() {
   };
 
   const toggleTodo = (id) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
+    setTodos(todos.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
   };
 
   const deleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+    setTodos(todos.filter(t => t.id !== id));
   };
 
   return (
@@ -37,7 +33,6 @@ export default function TodoList() {
         />
         <button type="submit">Add</button>
       </form>
-
       <ul>
         {todos.map((todo) => (
           <li
@@ -46,7 +41,10 @@ export default function TodoList() {
             style={{ textDecoration: todo.completed ? "line-through" : "none" }}
             data-testid={`todo-${todo.id}`}
           >
-            {todo.text} <button onClick={(e) => { e.stopPropagation(); deleteTodo(todo.id); }}>Delete</button>
+            {todo.text}{" "}
+            <button onClick={(e) => { e.stopPropagation(); deleteTodo(todo.id); }}>
+              Delete
+            </button>
           </li>
         ))}
       </ul>
